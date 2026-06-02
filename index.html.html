@@ -1,0 +1,219 @@
+<!-- 
+    Instructions for integration:
+    Replace your existing #start-screen, #intro-screen, and the related script section 
+    in your index.html with the code below.
+-->
+
+<!-- CSS to replace existing start/intro screen styles -->
+<style>
+    /* Prevent scrolling while intro is active */
+    body.no-scroll {
+        overflow: hidden;
+        height: 100vh;
+    }
+
+    /* Start Experience Screen Styles */
+    #start-screen {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: #050505;
+        z-index: 9999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+
+    #start-screen.fade-out {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Premium Start Button */
+    .premium-start-btn {
+        background-color: #FF6A00;
+        color: #ffffff;
+        font-size: 1.25rem; /* 20px */
+        font-weight: bold;
+        padding: 1rem 2.5rem;
+        border-radius: 9999px; /* full rounded */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 30px rgba(255, 106, 0, 0.6);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        /* Prevent text selection */
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .premium-start-btn:hover {
+        background-color: #e65c00;
+        transform: scale(1.05);
+        box-shadow: 0 0 40px rgba(255, 106, 0, 0.8);
+    }
+    
+    .premium-start-btn:active {
+        transform: scale(0.98);
+    }
+
+    @media (max-width: 768px) {
+        .premium-start-btn {
+            font-size: 1.125rem; /* 18px */
+            padding: 0.875rem 2rem;
+        }
+    }
+
+    /* Intro Video Screen Styles */
+    #intro-screen {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: #000000;
+        z-index: 999999; /* Below start screen */
+        display: none; /* Hidden initially */
+        justify-content: center;
+        align-items: center;
+        transition: opacity 1s ease-out, visibility 1s ease-out;
+    }
+    
+    #intro-screen.active {
+        display: flex;
+    }
+
+    #intro-screen.fade-out {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #intro-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Skip Button */
+    .skip-btn {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        transition: all 0.3s;
+        z-index: 10;
+    }
+    
+    .skip-btn:hover {
+        background: rgba(255, 106, 0, 0.3);
+        border-color: #FF6A00;
+    }
+</style>
+
+<!-- HTML to replace existing #start-screen and #intro-screen -->
+<!-- Start Experience Screen -->
+<div id="start-screen">
+    <!-- Using the fallback logo for the start screen -->
+    <img src="file_0000000057f07209b87bbcf1f3faa8b9.png" alt="Nexify.AI Logo" class="h-20 md:h-28 mb-10 object-contain animate-pulse" onerror="this.style.display='none';">
+    <button id="start-btn" class="premium-start-btn">
+        <i class="fa-solid fa-play"></i>
+        <span>Start Experience</span>
+    </button>
+</div>
+
+<!-- Intro Video Screen -->
+<div id="intro-screen">
+    <!-- Autoplay and muted are strictly removed -->
+    <video id="intro-video" playsinline preload="auto">
+        <source src="nexify-intro.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+    <button id="skip-btn" class="skip-btn">Skip Intro <i class="fa-solid fa-arrow-right ml-1"></i></button>
+</div>
+
+<!-- Script to replace existing Intro Video Logic -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const startScreen = document.getElementById('start-screen');
+        const startBtn = document.getElementById('start-btn');
+        const introScreen = document.getElementById('intro-screen');
+        const introVideo = document.getElementById('intro-video');
+        const skipBtn = document.getElementById('skip-btn');
+        const body = document.body;
+
+        // Function to gracefully close the intro experience
+        const closeExperience = () => {
+            // Pause video if playing
+            if(introVideo) {
+                introVideo.pause();
+                // Optional: reset video to beginning
+                // introVideo.currentTime = 0; 
+            }
+
+            // Fade out the intro screen
+            introScreen.classList.add('fade-out');
+            
+            // Re-enable scrolling
+            body.classList.remove('no-scroll');
+            
+            // Remove elements from DOM after fade completes
+            setTimeout(() => {
+                if(introScreen.parentNode) introScreen.parentNode.removeChild(introScreen);
+                if(startScreen && startScreen.parentNode) startScreen.parentNode.removeChild(startScreen);
+            }, 1000);
+        };
+
+        // 1. User clicks "Start Experience"
+        if(startBtn) {
+            startBtn.addEventListener('click', () => {
+                // Fade out Start Screen
+                startScreen.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    startScreen.style.display = 'none';
+                    
+                    // Show Intro Screen
+                    introScreen.classList.add('active');
+                    
+                    // Ensure video is unmuted before playing
+                    if(introVideo) {
+                        introVideo.muted = false;
+                        
+                        // Attempt to play
+                        const playPromise = introVideo.play();
+                        
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.error("Video playback failed:", error);
+                                // Fallback: If playback fails (e.g., due to strict browser policies even after interaction),
+                                // close the experience and show the website
+                                closeExperience();
+                            });
+                        }
+                    } else {
+                         closeExperience();
+                    }
+                }, 500); // Wait for start screen fade-out
+            });
+        }
+
+        // 2. Video ends naturally
+        if (introVideo) {
+            introVideo.addEventListener('ended', closeExperience);
+            introVideo.addEventListener('error', closeExperience); // Handle loading errors
+        }
+
+        // 3. User clicks "Skip Intro"
+        if (skipBtn) {
+            skipBtn.addEventListener('click', closeExperience);
+        }
+    });
+</script>
