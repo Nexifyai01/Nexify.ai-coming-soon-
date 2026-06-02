@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexify.AI | Coming Soon</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons for SVG icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505; /* Deep Black background */
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #FF6A00; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e65c00; }
+
+        .text-brand { color: #FF6A00; }
+        .bg-brand { background-color: #FF6A00; }
+        .border-brand { border-color: #FF6A00; }
+
+        /* Top Ambient Glow */
+        .ambient-glow {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at top center, rgba(255, 106, 0, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Bottom Ambient Glow */
+        .ambient-glow-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 50vh;
+            background: radial-gradient(circle at bottom center, rgba(255, 106, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(255, 106, 0, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-2px);
+        }
+
+        /* Countdown Box Style */
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            width: 100px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Icon Container Style */
+        .icon-box {
+            background: rgba(255, 106, 0, 0.1);
+            color: #FF6A00;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        /* Follow Button Style */
+        .btn-follow {
+            background: linear-gradient(to right, #FF6A00, #ff8c00);
+            color: white;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            width: 100%;
+        }
+        .btn-follow:hover {
+            box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Header Buttons */
+        .header-btn {
+            border: 1px solid rgba(255, 106, 0, 0.5);
+            color: #FF6A00;
+            background: transparent;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .header-btn:hover { background: rgba(255, 106, 0, 0.1); }
+        
+        .header-btn-solid {
+            background: #FF6A00;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .header-btn-solid:hover { background: #e65c00; }
+
+    </style>
+</head>
+<body class="antialiased relative selection:bg-[#FF6A00] selection:text-white">
+
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-bottom"></div>
+
+    <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl pb-24">
+        
+        <!-- Header (Logo on Top Left) -->
+        <header class="flex justify-between items-center py-6 border-b border-white/10 mb-16">
+            <!-- Exact Logo File Path Provided By You -->
+            <img src="WhatsApp Image 2026-06-02 at 3.36.44 PM (1)_2.jpeg" alt="Nexify.AI" class="h-10 md:h-12 object-contain">
+            <h1 id="fallback-logo" class="text-xl md:text-2xl font-bold tracking-wider hidden">
+                NEXIFY.<span class="text-brand">AI</span>
+            </h1>
+            
+            <div class="flex items-center gap-3 md:gap-4">
+                <a href="#contact" class="header-btn hidden sm:flex">
+                    <i class="ph ph-envelope-simple"></i> Contact
+                </a>
+                <a href="https://www.instagram.com/nexify_.ai?igsh=N3VpdDk3aHc1cmk3" target="_blank" class="header-btn-solid">
+                    <i class="ph ph-instagram-logo"></i> Follow Us
+                </a>
+            </div>
+        </header>
+
+        <main class="flex flex-col items-center text-center mb-24">
+            
+            <!-- Launching Soon Badge -->
+            <div class="inline-flex items-center gap-2 border border-[#FF6A00]/40 bg-[#FF6A00]/10 text-[#FF6A00] px-4 py-1.5 rounded-full text-sm font-medium mb-10">
+                <i class="ph ph-clock"></i> Launching Soon
+            </div>
+            
+            <!-- Main Headline -->
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+                Build Smarter.<br>
+                <span class="text-brand">Grow Faster.</span>
+            </h1>
+            
+            <!-- Subheadline -->
+            <p class="text-gray-400 text-lg md:text-2xl mb-2 max-w-2xl font-light">
+                Websites, Apps, AI Chatbots & Automation Solutions
+            </p>
+            <p class="text-gray-500 text-base md:text-lg mb-12">
+                for Modern Businesses
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-20" id="countdown">
+                <div class="countdown-box">
+                    <div class="text-4xl font-bold text-brand mb-1" id="days">05</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Days</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="text-4xl font-bold text-brand mb-1" id="hours">18</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Hours</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="text-4xl font-bold text-brand mb-1" id="minutes">45</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Minutes</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="text-4xl font-bold text-brand mb-1" id="seconds">12</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Seconds</div>
+                </div>
+            </div>
+            
+            <!-- Follow Us Section -->
+            <div class="w-full max-w-md mx-auto glass-card p-8 text-left mb-10">
+                <h3 class="text-2xl font-bold text-white mb-2 text-center">Get Notified When We Launch!</h3>
+                <p class="text-gray-400 text-center mb-6 text-sm">Want to grow your business and stay updated with our latest services? Follow us now 🚀</p>
+                
+                <a href="https://www.instagram.com/nexify_.ai?igsh=N3VpdDk3aHc1cmk3" target="_blank" class="btn-follow">
+                    <i class="ph-fill ph-instagram-logo text-xl"></i> Follow on Instagram
+                </a>
+            </div>
+            <p class="text-sm text-gray-500 flex items-center justify-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand inline-block"></span> Launching on Monday, June 8, 2026 at 10:00 AM
+            </p>
+        </main>
+
+        <section class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What We <span class="text-brand">Do</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">We don't just build websites. We build systems that help businesses grow.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Service 1 -->
+                <div class="glass-card p-6">
+                    <div class="icon-box"><i class="ph ph-globe"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Website Development</h3>
+                    <p class="text-gray-400 text-sm">Professional, fast & mobile-friendly websites</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="glass-card p-6">
+                    <div class="icon-box"><i class="ph ph-device-mobile"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Custom Apps & Dashboards</h3>
+                    <p class="text-gray-400 text-sm">Business tools, admin panels & analytics</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="glass-card p-6">
+                    <div class="icon-box"><i class="ph ph-robot"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">AI Chatbots</h3>
+                    <p class="text-gray-400 text-sm">24/7 AI assistants for customer support</p>
+                </div>
+                <!-- Service 4 -->
+                <div class="glass-card p-6">
+                    <div class="icon-box"><i class="ph ph-gear"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Business Automation</h3>
+                    <p class="text-gray-400 text-sm">Automate tasks, workflows & notifications</p>
+                </div>
+                <!-- Service 5 -->
+                <div class="glass-card p-6">
+                    <div class="icon-box"><i class="ph ph-trend-up"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Digital Growth</h3>
+                    <p class="text-gray-400 text-sm">Tools to attract customers & boost sales</p>
+                </div>
+                <!-- Service 6 -->
+                <div class="glass-card p-6">
+                    <div class="icon-box"><i class="ph ph-sparkle"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">AI-Powered Solutions</h3>
+                    <p class="text-gray-400 text-sm">Modern technology for modern businesses</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card p-10 md:p-16 text-center mb-24">
+            <div class="text-brand text-4xl mb-4 flex justify-center"><i class="ph ph-sparkle"></i></div>
+            <h2 class="text-3xl font-bold mb-6">Our <span class="text-brand">Mission</span></h2>
+            <p class="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                To help small and growing businesses save time, generate more leads, and scale faster with AI-powered solutions.
+            </p>
+        </section>
+
+        <section class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-10">Why Choose <span class="text-brand">Nexify.AI</span></h2>
+            
+            <div class="flex flex-col gap-3 max-w-3xl mx-auto">
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Modern & Professional Designs</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Fast & Mobile-Friendly Websites</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">AI-Powered Customer Support</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Custom Business Dashboards</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Automation That Saves Time</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Affordable Solutions</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Reliable Support & Maintenance</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Scalable Technology</span>
+                </div>
+                <div class="glass-card p-5 flex items-center gap-4">
+                    <i class="ph-fill ph-check-circle text-brand text-xl"></i>
+                    <span class="text-gray-200">Data-Driven Growth</span>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact" class="text-center pt-16 border-t border-white/5">
+            <!-- Exact Logo File Path Provided By You -->
+            <img src="WhatsApp Image 2026-06-02 at 3.36.44 PM (1)_2.jpeg" alt="Nexify.AI" class="h-10 mx-auto mb-4 object-contain">
+            <p class="text-gray-500 mb-8">Build. Automate. Grow.</p>
+            
+            <div class="flex justify-center gap-4 mb-6">
+                <a href="https://www.instagram.com/nexify_.ai?igsh=N3VpdDk3aHc1cmk3" target="_blank" class="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-brand hover:bg-white/5 transition-colors">
+                    <i class="ph ph-instagram-logo text-xl"></i>
+                </a>
+                <a href="mailto:nexify.ai.helpline@gmail.com" class="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-brand hover:bg-white/5 transition-colors">
+                    <i class="ph ph-envelope-simple text-xl"></i>
+                </a>
+            </div>
+            
+            <p class="text-gray-500 text-sm mb-8">
+                nexify_.ai | nexify.ai.helpline@gmail.com
+            </p>
+            
+            <p class="text-gray-600 text-xs">
+                &copy; 2026 Nexify.AI. All Rights Reserved.<br>Smart Solutions. Real Impact.
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Set the launch date to Monday, June 8, 2026 at 10:00 AM
+        const countDownDate = new Date("Jun 8, 2026 10:00:00").getTime();
+
+        // Update the count down every 1 second
+        const x = setInterval(function() {
+
+            // Get today's date and time
+            const now = new Date().getTime();
+            
+            // Find the distance between now and the count down date
+            const distance = countDownDate - now;
+            
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display the result in the corresponding elements
+            document.getElementById("days").innerHTML = days < 10 ? '0' + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? '0' + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? '0' + seconds : seconds;
+            
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "<div class='text-2xl font-bold text-brand p-4 glass-card'>We are LIVE!</div>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
